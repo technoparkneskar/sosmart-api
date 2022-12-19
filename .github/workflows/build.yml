@@ -1,0 +1,18 @@
+name: Build & Push Docker Image to container image registry
+
+on:
+  release:
+    types: [created]
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "Dockerfile"
+
+jobs:
+  docker:
+    uses: technoparkneskar/workflows/.github/workflows/build-docker-image.yml@main
+    secrets: inherit

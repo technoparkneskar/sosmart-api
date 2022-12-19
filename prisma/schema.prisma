@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model users {
+  id              String           @id @db.VarChar
+  email           String           @db.VarChar
+  password        String
+  token           String?
+  activated       Boolean          @default(false)
+  avatar          String           @default("default.png") @db.VarChar
+  products        products[]
+  user_activation user_activation?
+}
+
+model user_activation {
+  user       String    @id @db.VarChar
+  expired_at DateTime  @db.Timestamptz(6)
+  code       Int
+  last_retry DateTime? @db.Timestamptz(6)
+  attempts   Int       @default(0)
+  last_ip    String    @db.VarChar
+  users      users     @relation(fields: [user], references: [id], onDelete: Cascade, map: "user_id")
+}
+
+model product_history {
+  id          BigInt      @id @default(autoincrement())
+  product_id  String      @db.VarChar
+  start_at    DateTime    @db.Timestamptz
+  end_at      DateTime?    @db.Timestamptz
+  type        Int
+  products    products    @relation(fields: [product_id], references: [id], onDelete: Cascade, map: "product_id")
+}
+
+model products {
+  id              String            @id @db.VarChar
+  owner           String            @db.VarChar
+  added_at        DateTime          @db.Timestamptz(6)
+  name            String            @db.VarChar
+  product_history product_history[]
+  users           users             @relation(fields: [owner], references: [id], onDelete: Cascade, map: "owner_id")
+}

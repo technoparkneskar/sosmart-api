@@ -1,0 +1,13 @@
+name: Lint code & compile test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - "**"
+
+jobs:
+  test:
+    uses: technoparkneskar/workflows/.github/workflows/lint-and-compile-test.yml@master
