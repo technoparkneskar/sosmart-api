@@ -41,6 +41,7 @@ COPY --from=build-stage /tmp/build/package-lock.json .
 COPY --from=build-stage /tmp/build/node_modules ./node_modules
 COPY --from=build-stage /tmp/build/dist ./dist
 COPY --from=build-stage /tmp/build/secret-key .
+COPY --from=build-stage /tmp/build/sosmart-technopark-firebase.json .
 
 ENV TZ=Asia/Jakarta
 
