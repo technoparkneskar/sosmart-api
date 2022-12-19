@@ -6,7 +6,7 @@ LABEL maintainer "Technopark Neskar <technoparkn@gmail.com>"
 WORKDIR /tmp/build
 
 # Install build tools for node-gyp
-RUN apk add --no-cache build-base git python3
+RUN apk add --no-cache build-base git python3 openssl-dev
 
 # Copy package.json and package-lock.json
 COPY package.json .
